@@ -1,0 +1,8 @@
+{% extends "core/base.html" %}
+{% block title %}Order Status — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5 text-center" style="max-width: 480px;">
+  <h1 class="h5 mb-4">Order Status</h1>
+  {% include "orders/_status_fragment.html" %}
+</section>
+{% endblock %}

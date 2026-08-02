@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+{% block title %}{{ SITE_NAME }} — Websites & Digital Signposts for Zimbabwean Businesses{% endblock %}
+
+{% block content %}
+<section class="container py-5 text-center">
+  <h1 class="display-5 fw-bold">Your competitors are already online.<br><span style="color: var(--phyb-cyan);">Is your business?</span></h1>
+  <p class="lead text-muted mt-3">Modern, reliable websites and web apps built to get small businesses in Zimbabwe found, trusted, and ordered from — online.</p>
+  <a href="{% url 'orders:create' %}" class="btn btn-brand btn-lg mt-3">Get Your Signpost — $25/year</a>
+</section>
+
+{% if featured_projects %}
+<section class="container py-5">
+  <h2 class="h4 mb-4">Recent work</h2>
+  <div class="row g-4">
+    {% for project in featured_projects %}
+    <div class="col-12 col-md-4">
+      <a href="{{ project.get_absolute_url }}" class="text-decoration-none text-reset">
+        <div class="phyb-card">
+          <h3 class="h5">{{ project.title }}</h3>
+          <p class="text-muted small mb-0">{{ project.summary }}</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="text-center mt-4">
+    <a href="{% url 'portfolio:list' %}">See all work &rarr;</a>
+  </div>
+</section>
+{% endif %}
+
+{% if latest_posts %}
+<section class="container py-5">
+  <h2 class="h4 mb-4">From the blog</h2>
+  <div class="row g-4">
+    {% for post in latest_posts %}
+    <div class="col-12 col-md-4">
+      <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-reset">
+        <div class="phyb-card">
+          <h3 class="h5">{{ post.title }}</h3>
+          <p class="text-muted small mb-0">{{ post.excerpt }}</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

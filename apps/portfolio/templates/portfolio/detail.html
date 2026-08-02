@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% block title %}{{ project.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+  <a href="{% url 'portfolio:list' %}" class="small text-muted">&larr; All work</a>
+  <h1 class="h3 mt-2">{{ project.title }}</h1>
+  {% if project.client_name %}<p class="text-muted">Client: {{ project.client_name }}</p>{% endif %}
+  {% if project.cover_image %}
+    <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="img-fluid rounded my-4">
+  {% endif %}
+  <p>{{ project.description|linebreaks }}</p>
+  {% if project.live_url %}
+    <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-brand mt-3">View Live Site</a>
+  {% endif %}
+</section>
+{% endblock %}

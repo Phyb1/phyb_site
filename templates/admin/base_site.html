@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }} | PHYB Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}">PHYB <span style="color:#00bfff;">Admin</span></a>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  :root {
+    --primary: #00bfff;
+    --primary-fg: #000;
+    --header-bg: #000;
+    --header-color: #fff;
+    --link-fg: #007a9e;
+  }
+  #header { background: var(--header-bg); color: var(--header-color); }
+  .module h2, .module caption, .inline-group h2 { background: #111; }
+  div.breadcrumbs { background: #0a0a0a; }
+</style>
+{% endblock %}

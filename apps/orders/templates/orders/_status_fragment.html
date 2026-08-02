@@ -1,0 +1,24 @@
+{% if order.status == "awaiting_payment" %}
+<div id="order-status"
+     hx-get="{% url 'orders:status_partial' order.pk %}"
+     hx-trigger="every 4s"
+     hx-swap="outerHTML">
+  <div class="alert alert-info">⏳ Waiting for payment confirmation. If you triggered an Ecocash/OneMoney prompt, enter your PIN on your phone now.</div>
+</div>
+{% elif order.status == "paid" %}
+<div id="order-status">
+  <div class="alert alert-success">✅ Payment received — thank you! We'll be in touch on WhatsApp shortly to get your signpost live.</div>
+</div>
+{% elif order.status == "failed" %}
+<div id="order-status">
+  <div class="alert alert-danger">❌ Payment failed. <a href="{% url 'orders:payment_method' order.pk %}">Try again</a>.</div>
+</div>
+{% elif order.status == "cancelled" %}
+<div id="order-status">
+  <div class="alert alert-secondary">Payment was cancelled. <a href="{% url 'orders:payment_method' order.pk %}">Try again</a>.</div>
+</div>
+{% else %}
+<div id="order-status">
+  <div class="alert alert-secondary">Order received. <a href="{% url 'orders:payment_method' order.pk %}">Choose a payment method</a> to continue.</div>
+</div>
+{% endif %}

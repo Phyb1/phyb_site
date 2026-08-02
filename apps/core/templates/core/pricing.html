@@ -1,0 +1,121 @@
+{% extends "core/base.html" %}
+{% block title %}Pricing — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Straightforward pricing for websites built to get your business found — no monthly license fees, no page-builder lock-in.{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <h1 class="display-6 text-center mb-2">Pricing</h1>
+  <p class="lead text-muted text-center mb-5" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+    Built once, owned by you. No monthly license fees, no drag-and-drop template that breaks in a year — just a fast site that works properly even on 2G/3G.
+  </p>
+
+  <div class="row g-4">
+
+    <!-- Signpost -->
+    <div class="col-12 col-md-4">
+      <div class="phyb-card text-center">
+        <h2 class="h5">Signpost</h2>
+        <div class="phyb-price">$25<span class="fs-6 text-muted">/yr</span></div>
+        <p class="text-muted small mb-3">For businesses that just need to be findable — fast.</p>
+        <ul class="phyb-feature-list text-start">
+          <li>2-page site: who you are + how to order</li>
+          <li>Free .co.zw domain + hosting</li>
+          <li>WhatsApp ordering button, live 24/7</li>
+        </ul>
+        <a href="{% url 'orders:create' %}?package=signpost" class="btn btn-brand w-100 mt-3">Get Started — $25</a>
+      </div>
+    </div>
+
+    <!-- Starter -->
+    <div class="col-12 col-md-4">
+      <div class="phyb-card text-center">
+        <h2 class="h5">Starter</h2>
+        <div class="phyb-price">$280</div>
+        <p class="text-muted small mb-3">A proper company website — the one most businesses start with.</p>
+        <ul class="phyb-feature-list text-start">
+          <li>5 pages: Home, About, Services, Team, Contact</li>
+          <li>Mobile-first responsive design + dark mode toggle</li>
+          <li>Contact form — notifies you by email and WhatsApp</li>
+          <li>1 year .co.zw domain + hosting included</li>
+          <li>Admin panel to edit text/images yourself, no developer needed for small changes</li>
+          <li>3 months free support + SSL</li>
+        </ul>
+        <a href="{% url 'orders:create' %}?package=starter" class="btn btn-brand w-100 mt-3">Get Started — $280</a>
+      </div>
+    </div>
+
+    <!-- Pro -->
+    <div class="col-12 col-md-4">
+      <div class="phyb-card text-center" style="position: relative;">
+        <span class="badge badge-popular">Most Complete</span>
+        <h2 class="h5">Pro</h2>
+        <div class="phyb-price">$480</div>
+        <p class="text-muted small mb-3">Everything in Starter, built out further for businesses ready to compete properly online.</p>
+        <ul class="phyb-feature-list text-start">
+          <li>8 pages: all of Starter + Gallery/Portfolio, Testimonials, Pricing</li>
+          <li>Custom UI/UX design and branding — not a generic layout</li>
+          <li>SEO setup + help getting listed on Google Business</li>
+          <li>HTMX-powered navigation — pages feel instant, no reloads</li>
+          <li>WhatsApp chat button built in</li>
+          <li>1 year .com domain + hosting included</li>
+          <li>6 months free support + automatic backups</li>
+        </ul>
+        <a href="{% url 'orders:create' %}?package=pro" class="btn btn-brand w-100 mt-3">Get Started — $480</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Add-ons -->
+  <div class="note-box mt-5">
+    <h2 class="h6 mb-2">Add-ons</h2>
+    <ul class="phyb-feature-list">
+      <li>Extra page: $25/page</li>
+      <li>Blog/CMS module: $120</li>
+      <li>Monthly maintenance after the free support period: $15/month</li>
+    </ul>
+  </div>
+
+  <!-- Payment & timeline -->
+  <div class="row g-4 mt-1">
+    <div class="col-12 col-md-6">
+      <div class="note-box h-100">
+        <h2 class="h6 mb-2">Payment terms</h2>
+        <p class="small text-muted mb-1">50% upfront, 50% on delivery.</p>
+        <p class="small text-muted mb-0">Starter: $140 upfront &middot; Pro: $240 upfront.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="note-box h-100">
+        <h2 class="h6 mb-2">Timeline</h2>
+        <p class="small text-muted mb-1">Starter: 7–10 days.</p>
+        <p class="small text-muted mb-0">Pro: 12–15 days.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="small text-muted text-center mt-4">
+    Year 2 onwards: roughly $45/year for domain + hosting renewal only — if nothing about the site changes, that's the entire ongoing cost.
+  </p>
+
+  <!-- Why built this way -->
+  <div class="why-box mt-5">
+    <h2 class="h5 text-center mb-3">Why It's Built This Way — Not on Wix, Not on a Theme</h2>
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <p class="small mb-0"><strong>You own it outright.</strong> No monthly license fee to a page-builder platform — cancel Wix and your site disappears; this one is yours regardless of what you decide later.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <p class="small mb-0"><strong>Built for how Zimbabwe actually browses.</strong> Lean, fast pages that load properly on 2G/3G, not a bloated template dragging in scripts you'll never use.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <p class="small mb-0"><strong>A real admin panel.</strong> Update your own text, prices, and images without fighting a WordPress theme's settings maze.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <p class="small mb-0"><strong>Room to grow.</strong> Add online payments, a client portal, or booking system later without rebuilding from scratch.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+{% endblock %}

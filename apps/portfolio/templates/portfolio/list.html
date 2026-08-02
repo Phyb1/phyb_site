@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% block title %}Portfolio — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+  <h1 class="h3 mb-4 text-center">Our Work</h1>
+  <div class="row g-4">
+    {% for project in projects %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <a href="{{ project.get_absolute_url }}" class="text-decoration-none text-reset">
+        <div class="phyb-card">
+          {% if project.cover_image %}
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="img-fluid rounded mb-3">
+          {% endif %}
+          <span class="badge text-bg-dark mb-2">{{ project.get_package_display }}</span>
+          <h2 class="h5">{{ project.title }}</h2>
+          <p class="text-muted small mb-0">{{ project.summary }}</p>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <p class="text-muted text-center">No projects published yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

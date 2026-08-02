@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ SITE_NAME }} — Modern, Reliable Websites & Web Apps{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}PHYB builds fast, reliable websites and web apps that help small businesses in Zimbabwe get found online.{% endblock %}">
+
+  <!-- Set theme before first paint, straight from localStorage/system
+       preference, so there's no flash of the wrong theme. Kept tiny and
+       inline deliberately — it has to run before main.css is parsed. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("phyb-theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a class="navbar-brand" href="{% url 'core:home' %}">PHYB</a>
+
+      <div class="nav-controls">
+        <button type="button" class="theme-toggle" aria-label="Toggle light/dark theme">
+          {% include "core/_icon_theme.html" %}
+        </button>
+        <button class="navbar-toggler" type="button" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+      </div>
+
+      <div class="navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto text-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:list' %}">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'blog:list' %}">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'core:pricing' %}">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
+          <li class="nav-item nav-cta">
+            <a class="btn btn-brand" href="{% url 'orders:create' %}">Get a Signpost</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow-1">
+    {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container py-4 text-center">
+      <div class="fw-bold mb-2">{{ SITE_NAME }}</div>
+      <div class="small mb-3 footer-address">{{ BUSINESS_ADDRESS }}</div>
+      <div class="footer-links">
+        <a href="https://wa.me/{{ WHATSAPP_NUMBER }}" class="footer-link" target="_blank" rel="noopener">
+          {% include "core/_icon_whatsapp.html" with size="18" %}
+          <span>WhatsApp</span>
+        </a>
+        <a href="mailto:{{ CONTACT_EMAIL }}" class="footer-link">
+          <span aria-hidden="true">✉️</span>
+          <span>Email</span>
+        </a>
+        <a href="tel:{{ CONTACT_PHONE_DISPLAY }}" class="footer-link">
+          <span aria-hidden="true">📞</span>
+          <span>Call</span>
+        </a>
+        <a href="{% url 'core:pricing' %}" class="footer-link">Pricing</a>
+      </div>
+      <div class="small mt-3 footer-copy">&copy; {% now "Y" %} {{ SITE_NAME }}. Built to be found.</div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/{{ WHATSAPP_NUMBER }}" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    {% include "core/_icon_whatsapp.html" with size="28" %}
+  </a>
+
+  <script src="{% static 'vendor/htmx.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

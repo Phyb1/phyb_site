@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% block title %}Payment — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5" style="max-width: 480px;">
+  <div class="phyb-card mb-4">
+    <h1 class="h5">{{ order.business_name }}</h1>
+    <p class="text-muted small mb-0">{{ order.get_package_display }}</p>
+    <div class="phyb-price mt-2">${{ order.amount }}</div>
+  </div>
+
+  <h2 class="h6 mb-3">Pay with Ecocash / OneMoney</h2>
+  <form method="post" action="{% url 'orders:initiate_mobile' order.pk %}" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-2">
+      <select name="method" class="form-select">
+        <option value="ecocash">Ecocash</option>
+        <option value="onemoney">OneMoney</option>
+      </select>
+    </div>
+    <div class="mb-2">
+      <input type="tel" name="phone" class="form-control" placeholder="0776298873" value="{{ order.phone }}" required>
+    </div>
+    <button type="submit" class="btn btn-brand w-100">Pay ${{ order.amount }} Now</button>
+  </form>
+
+  <h2 class="h6 mb-3">Or pay by card / web checkout</h2>
+  <form method="post" action="{% url 'orders:initiate_web' order.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-light w-100">Continue to Paynow</button>
+  </form>
+</section>
+{% endblock %}

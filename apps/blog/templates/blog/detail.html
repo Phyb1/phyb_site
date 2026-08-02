@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% block title %}{{ post.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+  <a href="{% url 'blog:list' %}" class="small text-muted">&larr; All articles</a>
+  <h1 class="h3 mt-2">{{ post.title }}</h1>
+  <p class="text-muted small">{{ post.published_at|date:"d M Y" }}{% if post.author %} · {{ post.author.get_full_name|default:post.author.username }}{% endif %}</p>
+  {% if post.cover_image %}
+    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="img-fluid rounded my-4">
+  {% endif %}
+  <div>{{ post.body|linebreaks }}</div>
+</section>
+{% endblock %}
