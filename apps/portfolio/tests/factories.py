@@ -9,4 +9,4 @@ class ProjectFactory(factory.django.DjangoModelFactory):
 
     title = factory.Sequence(lambda n: f"Client Project {n}")
     summary = "A short project summary."
-    package = Project.Package.STARTER
+    package = Project.Package.STANDARD

@@ -25,16 +25,24 @@ def test_pricing_shows_signpost_price(client):
     assert b"25" in response.content
 
 
-def test_pricing_shows_all_three_packages(client):
+def test_pricing_shows_all_four_packages(client):
     response = client.get(reverse("core:pricing"))
     assert b"Signpost" in response.content
-    assert b"Starter" in response.content
-    assert b"Pro" in response.content
+    assert b"Basic" in response.content
+    assert b"Standard" in response.content
+    assert b"Premium" in response.content
+
+
+def test_pricing_shows_package_prices(client):
+    response = client.get(reverse("core:pricing"))
+    assert b"$120" in response.content
+    assert b"$250" in response.content
+    assert b"$370" in response.content
 
 
 def test_pricing_shows_addons_and_payment_terms(client):
     response = client.get(reverse("core:pricing"))
-    assert b"$120" in response.content  # blog/CMS add-on
+    assert b"$80" in response.content  # logo/branding add-on
     assert b"Payment terms" in response.content
     assert b"Timeline" in response.content
 

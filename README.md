@@ -1,7 +1,7 @@
 # PHYB Site
 
 Django site for PHYB — portfolio, blog, and order processing for the
-Signpost / Starter / Pro website packages, with Paynow (Ecocash/OneMoney)
+Signpost / Basic / Standard / Premium website packages, with Paynow (Ecocash/OneMoney)
 payment collection.
 
 ## Stack

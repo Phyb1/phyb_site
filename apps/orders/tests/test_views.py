@@ -17,9 +17,9 @@ def test_order_create_get_returns_200(client):
 
 
 def test_order_create_prefills_package_from_querystring(client):
-    response = client.get(reverse("orders:create") + "?package=starter")
+    response = client.get(reverse("orders:create") + "?package=standard")
     assert response.status_code == 200
-    assert b'value="starter" selected' in response.content
+    assert b'value="standard" selected' in response.content
 
 
 def test_order_create_post_creates_order_and_redirects(client):

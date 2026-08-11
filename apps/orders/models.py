@@ -5,16 +5,18 @@ from django.urls import reverse
 
 
 class Package(models.TextChoices):
-    SIGNPOST = "signpost", "2-Page Signpost — $25/year"
-    STARTER = "starter", "Starter — $280"
-    PRO = "pro", "Pro — $480"
+    SIGNPOST = "signpost", "Signpost — $25/year"
+    BASIC = "basic", "Basic — $120"
+    STANDARD = "standard", "Standard — $250"
+    PREMIUM = "premium", "Premium — $370"
     CUSTOM = "custom", "Custom quote"
 
 
 PACKAGE_PRICES = {
     Package.SIGNPOST: Decimal("25.00"),
-    Package.STARTER: Decimal("280.00"),
-    Package.PRO: Decimal("480.00"),
+    Package.BASIC: Decimal("120.00"),
+    Package.STANDARD: Decimal("250.00"),
+    Package.PREMIUM: Decimal("370.00"),
     Package.CUSTOM: Decimal("0.00"),
 }
 

@@ -8,8 +8,9 @@ class Project(models.Model):
 
     class Package(models.TextChoices):
         SIGNPOST = "signpost", "Signpost"
-        STARTER = "starter", "Starter"
-        PRO = "pro", "Pro"
+        BASIC = "basic", "Basic"
+        STANDARD = "standard", "Standard"
+        PREMIUM = "premium", "Premium"
         CUSTOM = "custom", "Custom build"
 
     title = models.CharField(max_length=200)
@@ -17,7 +18,7 @@ class Project(models.Model):
     client_name = models.CharField(max_length=200, blank=True)
     summary = models.CharField(max_length=300, help_text="One-line summary shown on cards.")
     description = models.TextField(blank=True)
-    package = models.CharField(max_length=20, choices=Package.choices, default=Package.STARTER)
+    package = models.CharField(max_length=20, choices=Package.choices, default=Package.STANDARD)
     live_url = models.URLField(blank=True)
     cover_image = models.ImageField(upload_to="portfolio/covers/", blank=True, null=True)
     is_featured = models.BooleanField(default=False, help_text="Show on the homepage.")
