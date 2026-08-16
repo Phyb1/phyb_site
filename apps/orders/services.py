@@ -43,6 +43,16 @@ class PaynowService:
         payment.add(order.get_package_display(), float(order.amount))
         return payment
 
+    @staticmethod
+    def _extract_error(response, fallback: str) -> str:
+        """Paynow's `InitResponse.__init__` has a bug: it returns early on
+        failure, before the line that would set `.error` ever runs — so
+        `.error` never actually exists on a failed response. `.status` is
+        always set though (it's assigned before the early return), so we
+        fall back to that, then to a generic message, rather than assuming
+        `.error` exists and 500ing when the SDK's own bug means it doesn't."""
+        return getattr(response, "error", None) or getattr(response, "status", None) or fallback
+
     def initiate_web_checkout(self, order: Order) -> InitiateResult:
         """Redirect flow — customer pays on Paynow's hosted page (cards,
         or Ecocash/OneMoney entered manually there)."""
@@ -65,7 +75,10 @@ class PaynowService:
                 poll_url=attempt.poll_url,
                 redirect_url=response.redirect_url,
             )
-        return InitiateResult(success=False, error=response.error or "Could not start payment.")
+        return InitiateResult(
+            success=False,
+            error=self._extract_error(response, "Could not start payment."),
+        )
 
     def initiate_mobile_payment(self, order: Order, phone: str, method: str = "ecocash") -> InitiateResult:
         """In-app flow — customer gets a USSD prompt on their phone
@@ -89,7 +102,10 @@ class PaynowService:
                 poll_url=attempt.poll_url,
                 instructions=getattr(response, "instructions", "") or "Enter your PIN on the prompt sent to your phone.",
             )
-        return InitiateResult(success=False, error=response.error or "Could not start mobile payment.")
+        return InitiateResult(
+            success=False,
+            error=self._extract_error(response, "Could not start mobile payment."),
+        )
 
     def check_status(self, poll_url: str) -> str:
         """Returns Paynow's status string, e.g. 'paid', 'created', 'cancelled'."""
