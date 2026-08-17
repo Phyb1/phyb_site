@@ -138,6 +138,7 @@ LOGGING = {
             "maxBytes": 5 * 1024 * 1024,
             "backupCount": 3,
             "formatter": "verbose",
+            "encoding":"utf-8",
         },
     },
     "root": {"handlers": ["console"], "level": "INFO"},
