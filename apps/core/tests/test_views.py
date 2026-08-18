@@ -91,3 +91,33 @@ def test_home_copy_does_not_mention_django(client):
 def test_about_copy_does_not_mention_django(client):
     response = client.get(reverse("core:about"))
     assert b"django" not in response.content.lower()
+
+
+def test_robots_txt_returns_200_and_references_sitemap(client):
+    response = client.get("/robots.txt")
+    assert response.status_code == 200
+    assert response["Content-Type"].startswith("text/plain")
+    assert b"Sitemap:" in response.content
+    assert b"/sitemap.xml" in response.content
+
+
+def test_robots_txt_disallows_admin(client):
+    response = client.get("/robots.txt")
+    assert b"Disallow: /admin/" in response.content
+
+
+def test_sitemap_xml_returns_200(client):
+    response = client.get("/sitemap.xml")
+    assert response.status_code == 200
+    assert b"<urlset" in response.content
+
+
+def test_sitemap_includes_static_pages(client):
+    response = client.get("/sitemap.xml")
+    assert b"/pricing/" in response.content
+
+
+def test_home_includes_structured_data(client):
+    response = client.get(reverse("core:home"))
+    assert b"application/ld+json" in response.content
+    assert b"ProfessionalService" in response.content

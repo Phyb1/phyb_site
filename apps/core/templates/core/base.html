@@ -23,6 +23,28 @@
   </script>
 
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <!-- LocalBusiness structured data — helps Google associate this site
+       with the Google Business Profile listing and surface rich results
+       (address, hours) directly in search, not just a blue link. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "{{ SITE_NAME }}",
+    "url": "https://{{ SITE_DOMAIN }}",
+    "email": "{{ CONTACT_EMAIL }}",
+    "telephone": "{{ CONTACT_PHONE_DISPLAY }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mvurwi",
+      "addressRegion": "Mashonaland Central",
+      "addressCountry": "ZW"
+    },
+    "areaServed": "ZW",
+    "description": "Modern, reliable websites and web apps for small businesses in Zimbabwe."
+  }
+  </script>
   {% block extra_head %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>

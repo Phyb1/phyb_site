@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from apps.blog.models import Post
@@ -18,6 +19,17 @@ def about(request):
 
 def pricing(request):
     return render(request, "core/pricing.html")
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Disallow: /orders/",  # lead/payment flow — nothing there worth indexing
+        f"Sitemap: https://{request.get_host()}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 def error_404(request, exception=None):
