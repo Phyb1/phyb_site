@@ -31,18 +31,19 @@
     <div class="col-12 col-md-4">
       <div class="phyb-card text-center h-100">
         <h2 class="h5">Basic</h2>
-        <div class="phyb-price">$120</div>
+        <div class="phyb-price">$80</div>
         <p class="text-muted small mb-3">Perfect for startups, portfolios + CV sites</p>
         <ul class="phyb-feature-list text-start">
-          <li>1–3 page website</li>
+          <li>Up to 4 pages</li>
           <li>Mobile-first responsive, 2G/3G optimized</li>
           <li>WhatsApp button + contact form</li>
           <li>Basic SEO + Google Business setup</li>
+          <li>Admin panel — edit your own text, prices &amp; images anytime</li>
           <li>1 month free support</li>
           <li class="feature-no">Blog / CMS</li>
           <li class="feature-no">E-commerce</li>
         </ul>
-        <a href="{% url 'orders:create' %}?package=basic" class="btn btn-brand w-100 mt-3">Get Started — $120</a>
+        <a href="{% url 'orders:create' %}?package=basic" class="btn btn-brand w-100 mt-3">Get Started — $80</a>
       </div>
     </div>
 
@@ -51,18 +52,18 @@
       <div class="phyb-card text-center h-100 phyb-card-highlight">
         <span class="badge badge-popular">Most Popular</span>
         <h2 class="h5">Standard</h2>
-        <div class="phyb-price">$250</div>
+        <div class="phyb-price">$200</div>
         <p class="text-muted small mb-3">For growing businesses that need to post content</p>
         <ul class="phyb-feature-list text-start">
           <li>Everything in Basic</li>
-          <li>Up to 5 pages</li>
-          <li>Blog + CMS admin panel</li>
+          <li>Up to 7 pages</li>
+          <li>Blog/CMS in your admin panel — publish your own posts &amp; updates</li>
           <li>Portfolio/gallery + testimonials</li>
           <li>Advanced SEO + speed optimization</li>
           <li>3 months free support + SSL</li>
           <li class="feature-no">E-commerce / payments</li>
         </ul>
-        <a href="{% url 'orders:create' %}?package=standard" class="btn btn-brand w-100 mt-3">Get Started — $250</a>
+        <a href="{% url 'orders:create' %}?package=standard" class="btn btn-brand w-100 mt-3">Get Started — $200</a>
       </div>
     </div>
 
@@ -74,9 +75,10 @@
         <p class="text-muted small mb-3">Full business solution with online sales</p>
         <ul class="phyb-feature-list text-start">
           <li>Everything in Standard</li>
-          <li>Up to 10 pages</li>
+          <li>Up to 12 pages</li>
           <li>E-commerce store + payments</li>
           <li>Booking system + WhatsApp API</li>
+          <li>One admin panel for products, bookings &amp; content</li>
           <li>Custom UI/UX design</li>
           <li>6 months free support + backups</li>
         </ul>
@@ -119,15 +121,16 @@
         <thead>
           <tr>
             <th>Feature</th>
-            <th class="text-center">Basic $120</th>
-            <th class="text-center">Standard $250</th>
+            <th class="text-center">Basic $80</th>
+            <th class="text-center">Standard $200</th>
             <th class="text-center">Premium $370</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Pages</td><td class="text-center">1–3</td><td class="text-center">Up to 5</td><td class="text-center">Up to 10</td></tr>
+          <tr><td>Pages</td><td class="text-center">Up to 4</td><td class="text-center">Up to 7</td><td class="text-center">Up to 12</td></tr>
           <tr><td>Mobile + WhatsApp</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td></tr>
-          <tr><td>Blog / CMS</td><td class="text-center">—</td><td class="text-center">✓</td><td class="text-center">✓</td></tr>
+          <tr><td>Admin panel</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td></tr>
+          <tr><td>Blog / CMS publishing</td><td class="text-center">—</td><td class="text-center">✓</td><td class="text-center">✓</td></tr>
           <tr><td>E-commerce</td><td class="text-center">—</td><td class="text-center">—</td><td class="text-center">✓</td></tr>
           <tr><td>Free support</td><td class="text-center">1 month</td><td class="text-center">3 months</td><td class="text-center">6 months</td></tr>
           <tr><td>Domain + hosting</td><td class="text-center">Client provides</td><td class="text-center">1 year .co.zw</td><td class="text-center">1 year .com</td></tr>
@@ -153,7 +156,7 @@
       <div class="note-box h-100">
         <h2 class="h6 mb-2">Payment terms</h2>
         <p class="small text-muted mb-1">Signpost: paid in full upfront ($25).</p>
-        <p class="small text-muted mb-0">Basic/Standard/Premium: 50% upfront, 50% on delivery — Basic $60 · Standard $125 · Premium $185.</p>
+        <p class="small text-muted mb-0">Basic/Standard/Premium: 50% upfront, 50% on delivery — Basic $40 · Standard $100 · Premium $185.</p>
       </div>
     </div>
     <div class="col-12 col-md-6">
@@ -180,7 +183,7 @@
         <p class="small mb-0"><strong>Built for Zimbabwean internet.</strong> Lean, fast pages that load on 2G/3G. WhatsApp-first, always.</p>
       </div>
       <div class="col-12 col-md-6">
-        <p class="small mb-0"><strong>A real admin panel.</strong> Update your own text, prices, and blog posts — no developer needed for small changes.</p>
+        <p class="small mb-0"><strong>A real admin panel, not just a promise.</strong> Change a price, swap a photo, fix a typo — done yourself in two minutes, any time, on every package. No messaging me and waiting for a developer to make a small edit.</p>
       </div>
       <div class="col-12 col-md-6">
         <p class="small mb-0"><strong>Room to grow.</strong> Start on Basic or Signpost, upgrade to e-commerce later without rebuilding from scratch.</p>

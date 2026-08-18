@@ -153,5 +153,9 @@ PAYNOW_INTEGRATION_ID = config("PAYNOW_INTEGRATION_ID", default="")
 PAYNOW_INTEGRATION_KEY = config("PAYNOW_INTEGRATION_KEY", default="")
 PAYNOW_RETURN_URL = config("PAYNOW_RETURN_URL", default="")
 PAYNOW_RESULT_URL = config("PAYNOW_RESULT_URL", default="")
+# Only needed while the Paynow integration is in test mode — see the
+# comment in apps/orders/services.py::_build_payment for why. Leave unset
+# in production once the integration is approved live.
+PAYNOW_TEST_MODE_EMAIL = config("PAYNOW_TEST_MODE_EMAIL", default="")
 
 LOGIN_REDIRECT_URL = "/"

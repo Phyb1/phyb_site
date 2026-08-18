@@ -39,7 +39,15 @@ class PaynowService:
 
     def _build_payment(self, order: Order):
         reference = f"PHYB-{order.pk}"
-        payment = self.client.create_payment(reference, order.email or "billing@phyb.co.zw")
+        # Paynow's test-mode integrations reject any authemail that isn't
+        # the merchant's own registered email — a real customer's email
+        # will always fail this check until the integration is approved
+        # live. PAYNOW_TEST_MODE_EMAIL is an opt-in override for testing
+        # the full flow before then; leave it unset once live, and this
+        # falls through to the normal customer-email behavior with no
+        # code change needed.
+        authemail = settings.PAYNOW_TEST_MODE_EMAIL or order.email or settings.CONTACT_EMAIL
+        payment = self.client.create_payment(reference, authemail)
         payment.add(order.get_package_display(), float(order.amount))
         return payment
 

@@ -35,8 +35,8 @@ def test_pricing_shows_all_four_packages(client):
 
 def test_pricing_shows_package_prices(client):
     response = client.get(reverse("core:pricing"))
-    assert b"$120" in response.content
-    assert b"$250" in response.content
+    assert b"$80" in response.content
+    assert b"$200" in response.content
     assert b"$370" in response.content
 
 
@@ -45,6 +45,14 @@ def test_pricing_shows_addons_and_payment_terms(client):
     assert b"$80" in response.content  # logo/branding add-on
     assert b"Payment terms" in response.content
     assert b"Timeline" in response.content
+
+
+def test_pricing_highlights_admin_panel_on_every_tier(client):
+    """Basic explicitly lists the admin panel too, not just Standard/Premium —
+    the comparison table's 'Admin panel' row should read \u2713 across all three."""
+    response = client.get(reverse("core:pricing"))
+    assert b"Admin panel" in response.content
+    assert response.content.lower().count(b"admin panel") >= 2
 
 
 def test_whatsapp_fab_present_on_every_page(client):

@@ -22,14 +22,14 @@ def test_signpost_amount_is_25():
     assert order.amount == Decimal("25.00")
 
 
-def test_basic_amount_is_120():
+def test_basic_amount_is_80():
     order = OrderFactory(package=Package.BASIC)
-    assert order.amount == Decimal("120.00")
+    assert order.amount == Decimal("80.00")
 
 
-def test_standard_amount_is_250():
+def test_standard_amount_is_200():
     order = OrderFactory(package=Package.STANDARD)
-    assert order.amount == Decimal("250.00")
+    assert order.amount == Decimal("200.00")
 
 
 def test_premium_amount_is_370():
