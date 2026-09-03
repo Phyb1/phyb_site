@@ -38,6 +38,7 @@ from django.conf import settings
 from paynow import Paynow
 
 from .models import Order, PaymentAttempt
+from .notifications import send_payment_confirmed_notification
 
 PAYNOW_INITIATE_URL = "https://www.paynow.co.zw/interface/initiatetransaction"
 PAYNOW_INITIATE_MOBILE_URL = "https://www.paynow.co.zw/interface/remotetransaction"
@@ -172,6 +173,7 @@ class PaynowService:
         if status == "paid" and order.status != Order.Status.PAID:
             order.status = Order.Status.PAID
             order.save(update_fields=["status", "updated_at"])
+            send_payment_confirmed_notification(order)
         elif status in {"cancelled", "disputed"}:
             order.status = Order.Status.CANCELLED
             order.save(update_fields=["status", "updated_at"])

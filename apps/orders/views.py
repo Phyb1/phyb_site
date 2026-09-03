@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 
 from .forms import OrderForm
 from .models import Order, PaymentAttempt
+from .notifications import send_new_order_notification
 from .services import PaynowService
 
 logger = logging.getLogger("apps.orders")
@@ -23,6 +24,7 @@ def order_create(request):
         if form.is_valid():
             order = form.save()
             logger.info("New order created: %s (id=%s)", order, order.pk)
+            send_new_order_notification(order, request=request)
             return redirect("orders:payment_method", pk=order.pk)
     else:
         form = OrderForm(initial=initial)

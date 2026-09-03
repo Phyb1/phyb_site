@@ -172,6 +172,45 @@ def test_sync_attempt_status_marks_order_paid(mock_paynow_cls):
     assert attempt.paynow_status == "paid"
 
 
+@patch("apps.orders.services.send_payment_confirmed_notification")
+@patch("apps.orders.services.Paynow")
+def test_sync_attempt_status_sends_payment_confirmed_email_on_transition_to_paid(
+    mock_paynow_cls, mock_notify
+):
+    mock_client = mock_paynow_cls.return_value
+    mock_client.check_transaction_status.return_value = MagicMock(status="Paid")
+
+    order = OrderFactory(status=Order.Status.AWAITING_PAYMENT)
+    attempt = PaymentAttempt.objects.create(
+        order=order, method="ecocash", poll_url="https://paynow.example/poll/123"
+    )
+
+    PaynowService().sync_attempt_status(attempt)
+
+    mock_notify.assert_called_once_with(order)
+
+
+@patch("apps.orders.services.send_payment_confirmed_notification")
+@patch("apps.orders.services.Paynow")
+def test_sync_attempt_status_does_not_resend_email_on_repeated_poll_while_already_paid(
+    mock_paynow_cls, mock_notify
+):
+    """Both the webhook and the htmx poll call sync_attempt_status — an
+    order that's already PAID getting polled again must not trigger a
+    second email."""
+    mock_client = mock_paynow_cls.return_value
+    mock_client.check_transaction_status.return_value = MagicMock(status="Paid")
+
+    order = OrderFactory(status=Order.Status.PAID)  # already paid
+    attempt = PaymentAttempt.objects.create(
+        order=order, method="ecocash", poll_url="https://paynow.example/poll/123"
+    )
+
+    PaynowService().sync_attempt_status(attempt)
+
+    mock_notify.assert_not_called()
+
+
 @patch("apps.orders.services.Paynow")
 def test_sync_attempt_status_marks_order_cancelled(mock_paynow_cls):
     mock_client = mock_paynow_cls.return_value
