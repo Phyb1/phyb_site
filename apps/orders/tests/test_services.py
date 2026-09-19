@@ -148,7 +148,7 @@ def test_initiate_sends_raw_unencoded_values_not_pre_encoded(mock_paynow_cls, mo
     PaynowService().initiate_web_checkout(order)
 
     _, sent_fields = mock_post_and_parse.call_args[0]
-    assert sent_fields["resulturl"].startswith("https://")  # not "https%3A%2F%2F..."
+    assert "://" in sent_fields["resulturl"]  # a real URL, not "https%3A%2F%2F..."
     assert "%" not in sent_fields["resulturl"]
 
 

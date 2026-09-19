@@ -384,3 +384,80 @@ label { color: var(--text); font-weight: 600; display: inline-block; margin-bott
   .phyb-price { font-size: 2rem; }
   .whatsapp-fab { bottom: 1.4rem; }
 }
+
+/* --- Utility additions ------------------------------------------------ */
+.hidden { display: none !important; }
+.d-block { display: block; }
+
+/* --- Payment method toggle (payment_method.html) ----------------------- */
+.payment-method-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+.payment-method-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--bg-elevated);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+.payment-method-option input[type="radio"] {
+  accent-color: var(--brand);
+  margin: 0;
+}
+/* Selected-state styling is applied by JS (adds/removes this class) —
+   deliberately not a CSS :has() selector, which has the same older
+   Android WebView compatibility problem whether it's driven by CSS or
+   JS; this page is used almost entirely from phones. */
+.payment-method-option.is-selected {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+/* --- Blog post body (rendered from Markdown) --------------------------
+   Scoped under .post-body so these rules only apply inside actual post
+   content, not the rest of the site. */
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+}
+.post-body th, .post-body td {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.post-body thead th {
+  background: var(--bg-elevated);
+  font-weight: 700;
+}
+.post-body h1, .post-body h2, .post-body h3, .post-body h4 {
+  margin-top: 1.75rem;
+  color: var(--brand);
+}
+.post-body ul, .post-body ol {
+  padding-left: 1.4rem;
+  margin: 0.75rem 0;
+}
+.post-body li { margin: 0.35rem 0; }
+.post-body blockquote {
+  border-left: 3px solid var(--brand);
+  margin: 1rem 0;
+  padding: 0.25rem 1rem;
+  color: var(--muted);
+}
+.post-body code {
+  background: var(--bg-elevated);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}

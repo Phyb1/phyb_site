@@ -130,3 +130,43 @@ def test_payment_return_falls_back_to_home_with_unknown_order(client):
     response = client.get(reverse("orders:payment_return") + "?reference=PHYB-999999")
     assert response.status_code == 302
     assert response.url == reverse("core:home")
+
+
+def test_mark_direct_payment_sets_awaiting_payment_and_redirects_to_whatsapp(client):
+    order = OrderFactory(status=Order.Status.PENDING)
+    response = client.post(reverse("orders:mark_direct_payment", kwargs={"pk": order.pk}))
+
+    order.refresh_from_db()
+    assert order.status == Order.Status.AWAITING_PAYMENT
+    assert response.status_code == 302
+    assert response.url.startswith("https://wa.me/")
+
+
+def test_mark_direct_payment_message_includes_order_details(client):
+    from urllib.parse import unquote
+
+    order = OrderFactory(status=Order.Status.PENDING, business_name="Samwa Bakery")
+    response = client.post(reverse("orders:mark_direct_payment", kwargs={"pk": order.pk}))
+    decoded = unquote(response.url)
+    assert f"order #{order.pk}" in decoded
+    assert "Samwa Bakery" in decoded
+
+
+def test_mark_direct_payment_requires_post(client):
+    order = OrderFactory()
+    response = client.get(reverse("orders:mark_direct_payment", kwargs={"pk": order.pk}))
+    assert response.status_code == 405
+
+
+def test_mark_direct_payment_does_not_downgrade_already_paid_order(client):
+    order = OrderFactory(status=Order.Status.PAID)
+    client.post(reverse("orders:mark_direct_payment", kwargs={"pk": order.pk}))
+    order.refresh_from_db()
+    assert order.status == Order.Status.PAID  # never moved backward to awaiting_payment
+
+
+def test_payment_method_page_shows_both_options(client):
+    order = OrderFactory()
+    response = client.get(reverse("orders:payment_method", kwargs={"pk": order.pk}))
+    assert b"Direct EcoCash Transfer" in response.content
+    assert b"Pay via Paynow" in response.content

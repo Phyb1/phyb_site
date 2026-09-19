@@ -69,7 +69,7 @@ def test_returns_false_and_does_not_raise_on_smtp_failure(mock_send_mail):
     assert result is False
 
 
-@patch("apps.orders.notifications.send_new_order_notification")
+@patch("apps.orders.views.send_new_order_notification")
 def test_order_create_view_calls_notification_and_still_redirects_on_email_failure(
     mock_notify, client
 ):

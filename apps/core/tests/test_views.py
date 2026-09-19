@@ -121,3 +121,20 @@ def test_home_includes_structured_data(client):
     response = client.get(reverse("core:home"))
     assert b"application/ld+json" in response.content
     assert b"ProfessionalService" in response.content
+
+
+def test_faq_returns_200(client):
+    response = client.get(reverse("core:faq"))
+    assert response.status_code == 200
+
+
+def test_faq_includes_structured_data(client):
+    response = client.get(reverse("core:faq"))
+    assert b"application/ld+json" in response.content
+    assert b"FAQPage" in response.content
+
+
+def test_faq_mentions_both_payment_methods(client):
+    response = client.get(reverse("core:faq"))
+    assert b"directly by Ecocash transfer" in response.content
+    assert b"Paynow" in response.content

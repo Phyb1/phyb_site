@@ -19,3 +19,9 @@ PAYNOW_INTEGRATION_ID = "test-id"
 PAYNOW_INTEGRATION_KEY = "test-key"
 PAYNOW_RETURN_URL = "http://testserver/orders/payment/return/"
 PAYNOW_RESULT_URL = "http://testserver/orders/payment/update/"
+# Must be reset here too — otherwise a real value set in a developer's own
+# .env (for live Paynow test-mode testing) leaks into every test run and
+# silently overrides order.email in _resolve_authemail, which is exactly
+# what caused test_resolve_authemail_* to fail against a real machine's
+# local .env despite passing in CI/a clean environment.
+PAYNOW_TEST_MODE_EMAIL = ""

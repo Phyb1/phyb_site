@@ -27,6 +27,12 @@ WHATSAPP_NUMBER = config("WHATSAPP_NUMBER", default="263776298873")  # internati
 CONTACT_PHONE_DISPLAY = config("CONTACT_PHONE_DISPLAY", default="+263 77 629 8873")
 CONTACT_EMAIL = config("CONTACT_EMAIL", default="hello@phyb.co.zw")
 BUSINESS_ADDRESS = config("BUSINESS_ADDRESS", default="Mvurwi, Mashonaland Central, Zimbabwe")
+# The registered name on the EcoCash line customers pay directly — shown
+# alongside CONTACT_PHONE_DISPLAY on the direct-payment option so a
+# customer can confirm it matches before sending money (EcoCash itself
+# shows the recipient name on their end too; this is what they should
+# expect to see).
+ECOCASH_MERCHANT_NAME = config("ECOCASH_MERCHANT_NAME", default="")
 
 INSTALLED_APPS = [
     "django.contrib.admin",

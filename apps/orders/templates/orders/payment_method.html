@@ -8,25 +8,102 @@
     <div class="phyb-price mt-2">${{ order.amount }}</div>
   </div>
 
-  <h2 class="h6 mb-3">Pay with Ecocash / OneMoney</h2>
-  <form method="post" action="{% url 'orders:initiate_mobile' order.pk %}" class="mb-4">
-    {% csrf_token %}
-    <div class="mb-2">
-      <select name="method" class="form-select">
-        <option value="ecocash">Ecocash</option>
-        <option value="onemoney">OneMoney</option>
-      </select>
-    </div>
-    <div class="mb-2">
-      <input type="tel" name="phone" class="form-control" placeholder="0776298873" value="{{ order.phone }}" required>
-    </div>
-    <button type="submit" class="btn btn-brand w-100">Pay ${{ order.amount }} Now</button>
-  </form>
+  <div class="payment-method-toggle mb-4">
+    <label class="payment-method-option">
+      <input type="radio" name="payment_choice" value="direct" checked>
+      <span>Direct EcoCash Transfer</span>
+    </label>
+    <label class="payment-method-option">
+      <input type="radio" name="payment_choice" value="paynow">
+      <span>Pay via Paynow</span>
+    </label>
+  </div>
 
-  <h2 class="h6 mb-3">Or pay by card / web checkout</h2>
-  <form method="post" action="{% url 'orders:initiate_web' order.pk %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-outline-light w-100">Continue to Paynow</button>
-  </form>
+  <!-- Direct EcoCash Transfer — manual, no Paynow involved. Confirmed by
+       hand once the transfer is received; no automatic status update. -->
+  <div id="direct-payment-section">
+    <h2 class="h6 mb-3">Send Directly via EcoCash</h2>
+    <div class="note-box mb-3">
+      <div class="mb-2">
+        <span class="text-muted small d-block">Send to</span>
+        <strong>{{ ECOCASH_MERCHANT_NAME|default:SITE_NAME }}</strong>
+      </div>
+      <div class="mb-2">
+        <span class="text-muted small d-block">EcoCash number</span>
+        <strong>{{ CONTACT_PHONE_DISPLAY }}</strong>
+      </div>
+      <div>
+        <span class="text-muted small d-block">Amount</span>
+        <strong>${{ order.amount }}</strong>
+      </div>
+    </div>
+    <p class="text-muted small">Confirm the recipient name matches before sending. Once sent, tap below — this notifies us on WhatsApp so we can confirm receipt and get started.</p>
+    <form method="post" action="{% url 'orders:mark_direct_payment' order.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-brand w-100">I've Sent It — Notify via WhatsApp</button>
+    </form>
+  </div>
+
+  <!-- Pay via Paynow — instant, automatic status update via webhook/poll. -->
+  <div id="paynow-payment-section" class="hidden">
+    <h2 class="h6 mb-3">Pay with Ecocash / OneMoney (via Paynow)</h2>
+    <p class="text-muted small">Instant — you'll get a PIN prompt on your phone and your order updates automatically once paid.</p>
+    <form method="post" action="{% url 'orders:initiate_mobile' order.pk %}" class="mb-4">
+      {% csrf_token %}
+      <div class="mb-2">
+        <select name="method" class="form-select">
+          <option value="ecocash">Ecocash</option>
+          <option value="onemoney">OneMoney</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <input type="tel" name="phone" class="form-control" placeholder="0776298873" value="{{ order.phone }}" required>
+      </div>
+      <button type="submit" class="btn btn-brand w-100">Pay ${{ order.amount }} Now</button>
+    </form>
+
+    <h2 class="h6 mb-3">Or pay by card / web checkout</h2>
+    <form method="post" action="{% url 'orders:initiate_web' order.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-light w-100">Continue to Paynow</button>
+    </form>
+  </div>
 </section>
+
+<script>
+// Plain JS toggle rather than a CSS :has() selector — :has() isn't
+// supported on older Android WebView, which matters here since this page
+// is used almost entirely from phones. This drives both which section is
+// visible AND which option label looks selected.
+(function () {
+  "use strict";
+  var radios = document.querySelectorAll('input[name="payment_choice"]');
+  var directSection = document.getElementById("direct-payment-section");
+  var paynowSection = document.getElementById("paynow-payment-section");
+
+  function updateVisibility() {
+    var checked = document.querySelector('input[name="payment_choice"]:checked');
+    if (!checked) return;
+
+    if (checked.value === "direct") {
+      directSection.classList.remove("hidden");
+      paynowSection.classList.add("hidden");
+    } else {
+      directSection.classList.add("hidden");
+      paynowSection.classList.remove("hidden");
+    }
+
+    for (var i = 0; i < radios.length; i++) {
+      var label = radios[i].closest(".payment-method-option");
+      if (!label) continue;
+      label.classList.toggle("is-selected", radios[i].checked);
+    }
+  }
+
+  for (var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener("change", updateVisibility);
+  }
+  updateVisibility();
+})();
+</script>
 {% endblock %}

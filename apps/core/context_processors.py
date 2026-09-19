@@ -11,4 +11,5 @@ def site_meta(request):
         "CONTACT_PHONE_DISPLAY": settings.CONTACT_PHONE_DISPLAY,
         "CONTACT_EMAIL": settings.CONTACT_EMAIL,
         "BUSINESS_ADDRESS": settings.BUSINESS_ADDRESS,
+        "ECOCASH_MERCHANT_NAME": settings.ECOCASH_MERCHANT_NAME,
     }

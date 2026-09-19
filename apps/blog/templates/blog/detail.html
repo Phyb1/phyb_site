@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load blog_extras %}
 {% block title %}{{ post.title }} — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <section class="container py-5">
@@ -8,6 +9,6 @@
   {% if post.cover_image %}
     <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="img-fluid rounded my-4">
   {% endif %}
-  <div>{{ post.body|linebreaks }}</div>
+  <div class="post-body">{{ post.body|markdownify }}</div>
 </section>
 {% endblock %}

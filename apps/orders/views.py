@@ -1,5 +1,7 @@
 import logging
+from urllib.parse import quote
 
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -35,6 +37,28 @@ def order_create(request):
 def payment_method(request, pk):
     order = get_object_or_404(Order, pk=pk)
     return render(request, "orders/payment_method.html", {"order": order})
+
+
+@require_POST
+def mark_direct_payment(request, pk):
+    """Customer says they've sent a direct EcoCash transfer (not through
+    Paynow). There's no webhook for a manual transfer, so this marks the
+    order as awaiting manual confirmation and hands the customer off to
+    WhatsApp to notify the merchant directly \u2014 the WhatsApp message IS
+    the notification mechanism here. The order only becomes PAID when
+    that's manually confirmed in /admin/ (which fires the payment-
+    confirmed email itself \u2014 see OrderAdmin.save_model)."""
+    order = get_object_or_404(Order, pk=pk)
+    if order.status == Order.Status.PENDING:
+        order.status = Order.Status.AWAITING_PAYMENT
+        order.save(update_fields=["status", "updated_at"])
+
+    message = (
+        f"Hi, I've sent ${order.amount} via EcoCash direct transfer for "
+        f"order #{order.pk} ({order.business_name} \u2014 {order.get_package_display()}). "
+        f"Please confirm."
+    )
+    return redirect(f"https://wa.me/{settings.WHATSAPP_NUMBER}?text={quote(message)}")
 
 
 @require_POST

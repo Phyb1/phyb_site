@@ -21,6 +21,10 @@ def pricing(request):
     return render(request, "core/pricing.html")
 
 
+def faq(request):
+    return render(request, "core/faq.html")
+
+
 def robots_txt(request):
     lines = [
         "User-agent: *",
