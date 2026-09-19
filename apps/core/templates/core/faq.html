@@ -1,0 +1,118 @@
+{% extends "core/base.html" %}
+{% block title %}FAQ — Website Design Zimbabwe — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Common questions about PHYB's website packages — pricing, timelines, payment methods, and what's actually included.{% endblock %}
+
+{% block extra_head %}
+<!-- FAQPage structured data — lets Google show these Q&As directly in
+     search results as rich snippets, not just a blue link. Keep this in
+     sync with the visible Q&A blocks below if either changes. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much is a website in Zimbabwe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PHYB packages start from $25/year for a Signpost (2-page site, domain and hosting included, no hidden fees). Full multi-page websites start from $80, one-time, with $25/year for domain and hosting from year two."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you build a website for Mvurwi, Bindura, or Harare businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 PHYB works with businesses across Zimbabwe. Most work is done remotely, so location isn't a limitation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a Facebook page and a website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Facebook page can be suspended or banned and was never really yours to begin with. A website you own outright. Google and AI search tools also draw their answers from indexed websites, not Facebook pages, so a website gives you a real chance of being found that a Facebook-only presence doesn't."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you do e-commerce and bookings?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, on the Premium package \u2014 online payments, a booking system, and WhatsApp API integration. Smaller packages include a WhatsApp ordering button, which covers most small businesses' needs without full e-commerce."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to build my site?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Signpost: 24-48 hours. Basic: 5-7 days. Standard: 10-12 days. Premium: 15-20 days. You'll see a draft before launch either way."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will my site appear on Google?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every PHYB site is mobile-friendly and built with SEO basics in place from the start, which gives Google what it needs to index and rank the site. Ranking well for competitive terms still takes ongoing content and time, the same as with any website."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I pay?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two options: pay directly by Ecocash transfer to the business's registered EcoCash number (confirmed manually once received), or pay instantly through Paynow by Ecocash, OneMoney, or card. Both are available on the payment page after your order is placed."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="container py-5" style="max-width: 720px;">
+  <h1 class="h3 mb-4 text-center">Frequently Asked Questions</h1>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">How much is a website in Zimbabwe?</h2>
+    <p class="text-muted small mb-0">PHYB packages start from $25/year for a Signpost — a 2-page site with domain and hosting included, no hidden fees. Full multi-page websites start from $80, one-time, with $25/year for domain and hosting from year two.</p>
+  </div>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">Can you build a website for Mvurwi, Bindura, or Harare businesses?</h2>
+    <p class="text-muted small mb-0">Yes — PHYB works with businesses across Zimbabwe. Most work is done remotely, so location isn't a limitation.</p>
+  </div>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">What's the difference between a Facebook page and a website?</h2>
+    <p class="text-muted small mb-0">A Facebook page can be suspended or banned and was never really yours to begin with. A website you own outright. Google and AI search tools also draw their answers from indexed websites, not Facebook pages, so a website gives you a real chance of being found that a Facebook-only presence doesn't.</p>
+  </div>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">Do you do e-commerce and bookings?</h2>
+    <p class="text-muted small mb-0">Yes, on the Premium package — online payments, a booking system, and WhatsApp API integration. Smaller packages include a WhatsApp ordering button, which covers most small businesses' needs without full e-commerce.</p>
+  </div>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">How long does it take to build my site?</h2>
+    <p class="text-muted small mb-0">Signpost: 24–48 hours. Basic: 5–7 days. Standard: 10–12 days. Premium: 15–20 days. You'll see a draft before launch either way.</p>
+  </div>
+
+  <div class="phyb-card mb-3">
+    <h2 class="h5">Will my site appear on Google?</h2>
+    <p class="text-muted small mb-0">Every PHYB site is mobile-friendly and built with SEO basics in place from the start, which gives Google what it needs to index and rank the site. Ranking well for competitive terms still takes ongoing content and time, the same as with any website.</p>
+  </div>
+
+  <div class="phyb-card mb-4">
+    <h2 class="h5">How do I pay?</h2>
+    <p class="text-muted small mb-0">Two options: pay directly by Ecocash transfer to the business's registered EcoCash number (confirmed manually once received), or pay instantly through Paynow by Ecocash, OneMoney, or card. Both are available on the payment page after your order is placed.</p>
+  </div>
+
+  <div class="text-center">
+    <a href="{% url 'orders:create' %}?package=signpost" class="btn btn-brand">Get Started — $25</a>
+  </div>
+</section>
+{% endblock %}
